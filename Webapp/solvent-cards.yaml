@@ -1,4 +1,4 @@
 commands:
   default:
-    unix: python ${PROJECT_DIR}/app.py
+    unix: python ${PROJECT_DIR}/webapp.py
     supports_http_options: true
