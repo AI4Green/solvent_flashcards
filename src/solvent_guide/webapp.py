@@ -17,4 +17,5 @@ def app_run():
         Timer(1, open_browser).start()
         app.run(debug=False, use_reloader=False, host='0.0.0.0', port='80')
 
+
 app_run()

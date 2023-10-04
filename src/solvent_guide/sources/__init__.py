@@ -11,7 +11,7 @@ def create_app():
 
     # Now we need to import the app modules as blueprints
     with app.app_context():
-        from sources.blueprints.solvent_guide import solvent_guide_bp
+        from .blueprints.solvent_guide import solvent_guide_bp
         app.register_blueprint(solvent_guide_bp)
 
     return app

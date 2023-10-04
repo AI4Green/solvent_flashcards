@@ -8,8 +8,6 @@ import plotly.express as px
 from flask import Response, render_template, jsonify
 
 
-#from Webapp.sources import get_notification_number, get_workgroups
-
 from . import solvent_guide_bp
 
 
@@ -31,9 +29,15 @@ def solvent_guide(sol: Optional[str] = None) -> Response:
     # user must be logged in
     #workgroups = get_workgroups()
    # notification_number = get_notification_number()
-    CHEM21 = pd.read_csv(
-        os.path.join(os.path.dirname(os.path.abspath(__file__)), "CHEM21_full.csv")
-    )
+    try:
+        CHEM21 = pd.read_csv(
+            os.path.join(os.path.dirname(os.path.abspath(__file__)), "CHEM21_full_updated.csv")
+        )
+    except FileNotFoundError:
+        CHEM21 = pd.read_csv(
+            os.path.join(os.path.dirname(os.path.abspath(__file__)), "CHEM21_full.csv")
+        )
+
     CHEM21 = CHEM21.sort_values(by="Family")
     CHEM21 = CHEM21.sort_values(by="Solvent")
     CHEM21 = CHEM21.fillna("")
