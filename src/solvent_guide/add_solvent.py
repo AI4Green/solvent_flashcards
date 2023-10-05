@@ -64,7 +64,7 @@ def add_solvent():
     safety = input('Enter CHEM21 Safety Score:')
     if safety == '':
         print('No safety score provided, proceeding...')
-        solvent_data['Safety'] = 'Not Available'
+        solvent_data['Safety'] = -404
     else:
         solvent_data['Safety'] = int(safety)
         s = int(safety)
@@ -72,7 +72,7 @@ def add_solvent():
     health = input('Enter CHEM21 Health Score:')
     if health == '':
         print('No health score provided, proceeding...')
-        solvent_data['Health'] = 'Not Available'
+        solvent_data['Health'] = -404
     else:
         solvent_data['Health'] = int(health)
         h = int(health)
@@ -80,7 +80,7 @@ def add_solvent():
     env = input('Enter CHEM21 Environment Score:')
     if env == '':
         print('No health score provided, proceeding...')
-        solvent_data['Env'] = 'Not Available'
+        solvent_data['Env'] = -404
     else:
         solvent_data['Env'] = int(env)
         e = int(env)
@@ -105,7 +105,7 @@ def add_solvent():
 
 
     chem21_updated = pd.concat([chem21, pd.DataFrame(solvent_data, index=[0])])
-    #chem21_updated = chem21.append(solvent_data, ignore_index=True)
+
     chem21_updated.to_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)),
                      "./sources/blueprints/solvent_guide/", "CHEM21_full_updated.csv"))
 

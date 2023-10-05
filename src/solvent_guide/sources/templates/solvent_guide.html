@@ -69,26 +69,28 @@
                       </tr>
                       <tr>
                         <th scope="row" style="border-style: hidden!important;">Safety</th>
-                        {% if solvent["Safety"] is integer %}
+                        {% if solvent["Safety"] != -404 %}
                         <td style="border-style: hidden!important" class="{% if solvent["Safety"] < 4 %}hazard-acceptable{% elif solvent["Safety"] < 7 %}hazard-warning{% else %}hazard-hazardous{% endif %}">{{ solvent["Safety"] }}</td>
                         {% else %}
-                        <td style="border-style: hidden!important" class="">{{ solvent["Safety"] }}</td>
+                        <td style="border-style: hidden!important" class="">Not Available</td>
                         {% endif %}
+
                       </tr>
                       <tr>
                         <th scope="row" style="border-style: hidden!important;">Health</th>
-                        {% if solvent["Health"] is string %}
-                          <td style="border-style: hidden!important" class="">{{ solvent["Health"] }}</td>
+                        {% if solvent["Health"] != -404 %}
+                        <td style="border-style: hidden!important" class="{% if solvent["Health"] < 4 %}hazard-acceptable{% elif solvent["Health"] < 7 %}hazard-warning{% else %}hazard-hazardous{% endif %}">{{ solvent["Health"] }}</td>
+
                         {% else %}
-                          <td style="border-style: hidden!important" class="{% if solvent["Health"] < 4 %}hazard-acceptable{% elif solvent["Health"] < 7 %}hazard-warning{% else %}hazard-hazardous{% endif %}">{{ solvent["Health"] }}</td>
-                        {% endif %}
+                        <td style="border-style: hidden!important" class="">Not Available</td>
+                          {% endif %}
                       </tr>
                       <tr>
                         <th scope="row" style="border-style: hidden!important;">Environment</th>
-                        {% if solvent["Env"] is not string %}
+                        {% if solvent["Env"] != -404 %}
                         <td style="border-style: hidden!important" class="{% if solvent["Env"] < 4 %}hazard-acceptable{% elif solvent["Env"] < 7 %}hazard-warning{% else %}hazard-hazardous{% endif %}">{{ solvent["Env"] }}</td>
                         {% else %}
-                        <td style="border-style: hidden!important" class="">{{ solvent["Env"] }}</td>
+                        <td style="border-style: hidden!important" class="">Not Available</td>
                         {% endif %}
                       </tr>
                       <tr>
@@ -159,25 +161,30 @@
                         <th scope="row" style="border-style: hidden!important;">Flash Point / &deg;C</th>
                         <td style="border-style: hidden!important;">{{ solvent["FP"] }}</td>
                       </tr>
-                      <tr>
-                        {% if solvent["Safety"] is string %}
-                          <td style="border-style: hidden!important" class="">{{ solvent["Safety"] }}</td>
+                     <tr>
+                        <th scope="row" style="border-style: hidden!important;">Safety</th>
+                        {% if solvent["Safety"] != -404 %}
+                        <td style="border-style: hidden!important" class="{% if solvent["Safety"] < 4 %}hazard-acceptable{% elif solvent["Safety"] < 7 %}hazard-warning{% else %}hazard-hazardous{% endif %}">{{ solvent["Safety"] }}</td>
                         {% else %}
-                          <td style="border-style: hidden!important" class="{% if solvent["Safety"] < 4 %}hazard-acceptable{% elif solvent["Safety"] < 7 %}hazard-warning{% else %}hazard-hazardous{% endif %}">{{ solvent["Health"] }}</td>
+                        <td style="border-style: hidden!important" class="">Not Available</td>
                         {% endif %}
+
                       </tr>
                       <tr>
-                        {% if solvent["Health"] is string %}
-                          <td style="border-style: hidden!important" class="">{{ solvent["Health"] }}</td>
+                        <th scope="row" style="border-style: hidden!important;">Health</th>
+                        {% if solvent["Health"] != -404 %}
+                        <td style="border-style: hidden!important" class="{% if solvent["Health"] < 4 %}hazard-acceptable{% elif solvent["Health"] < 7 %}hazard-warning{% else %}hazard-hazardous{% endif %}">{{ solvent["Health"] }}</td>
+
                         {% else %}
-                          <td style="border-style: hidden!important" class="{% if solvent["Health"] < 4 %}hazard-acceptable{% elif solvent["Health"] < 7 %}hazard-warning{% else %}hazard-hazardous{% endif %}">{{ solvent["Health"] }}</td>
-                        {% endif %}
+                        <td style="border-style: hidden!important" class="">Not Available</td>
+                          {% endif %}
                       </tr>
                       <tr>
-                        {% if solvent["Env"] is string %}
-                          <td style="border-style: hidden!important" class="">{{ solvent["Env"] }}</td>
+                        <th scope="row" style="border-style: hidden!important;">Environment</th>
+                        {% if solvent["Env"] != -404 %}
+                        <td style="border-style: hidden!important" class="{% if solvent["Env"] < 4 %}hazard-acceptable{% elif solvent["Env"] < 7 %}hazard-warning{% else %}hazard-hazardous{% endif %}">{{ solvent["Env"] }}</td>
                         {% else %}
-                          <td style="border-style: hidden!important" class="{% if solvent["Env"] < 4 %}hazard-acceptable{% elif solvent["Env"] < 7 %}hazard-warning{% else %}hazard-hazardous{% endif %}">{{ solvent["Env"] }}</td>
+                        <td style="border-style: hidden!important" class="">Not Available</td>
                         {% endif %}
                       </tr>
                       <tr>
