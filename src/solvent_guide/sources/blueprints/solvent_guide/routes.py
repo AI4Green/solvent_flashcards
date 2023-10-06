@@ -31,7 +31,7 @@ def solvent_guide(sol: Optional[str] = None) -> Response:
    # notification_number = get_notification_number()
     try:
         CHEM21 = pd.read_csv(
-            os.path.join(os.path.dirname(os.path.abspath(__file__)), "CHEM21_full_updated.csv")
+            os.path.join(os.path.dirname(os.path.abspath(__file__)), "CHEM21_full_updated.csv"), dtype={'Number': 'Int64'}
         )
     except FileNotFoundError:
         CHEM21 = pd.read_csv(
@@ -44,6 +44,7 @@ def solvent_guide(sol: Optional[str] = None) -> Response:
     solvents = CHEM21.to_dict("index")
     solvents = list(solvents.values())
     families = sorted(list(set(CHEM21["Family"].tolist())))
+
     # if from reaction table and a solvent was selected
     if sol:
         if sol not in CHEM21["Solvent Alternative Name"].tolist():

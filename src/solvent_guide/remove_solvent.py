@@ -1,6 +1,7 @@
 import pandas as pd
 import os
 
+
 def remove_solvent():
 
     cas_to_remove = input('Please enter the CAS number for the solvent you wish to remove:')
@@ -25,4 +26,5 @@ def remove_solvent():
         print('CAS number: %s was not found in the database!' % cas_to_remove)
 
 
-remove_solvent()
+if __name__ == '__main__':
+    remove_solvent()
