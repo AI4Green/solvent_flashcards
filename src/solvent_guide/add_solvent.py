@@ -5,12 +5,12 @@ from .sources.blueprints.solvent_guide.routes import get_radar_plot
 try:
     chem21 = pd.read_csv(
         os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                     ".sources/blueprints/solvent_guide/", "CHEM21_full_updated.csv"), index_col=0)
+                     "sources/blueprints/solvent_guide/", "CHEM21_full_updated.csv"), index_col=0)
 
 except FileNotFoundError:
     chem21 = pd.read_csv(
         os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                     ".sources/blueprints/solvent_guide/", "CHEM21_full.csv"), index_col=0)
+                     "sources/blueprints/solvent_guide/", "CHEM21_full.csv"), index_col=0)
 
 
 def add_solvent_from_dataframe(dataframe_to_add):
@@ -49,13 +49,14 @@ def add_solvent_from_dataframe(dataframe_to_add):
 
         chem21_updated = pd.concat([chem21, dataframe_to_add], ignore_index=False)
         chem21_updated.to_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                     ".sources/blueprints/solvent_guide/", "CHEM21_full_updated.csv"))
+                     "sources/blueprints/solvent_guide/", "CHEM21_full_updated.csv"))
 
         print('Data successfully added!')
 
 def add_solvent():
 
-    print('Follow the prompts to add a flashcard for the new solvent. Prompts can be skipped by pressing Enter.')
+    print('Follow the prompts to add a flashcard for the new solvent. Prompts can be skipped by pressing Enter. For more '
+          'detail about these prompts, please see the documentation: https://test.pypi.org/project/solvent-guide/')
 
     solvent_data = {}
 

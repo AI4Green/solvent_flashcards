@@ -9,19 +9,15 @@ in the hope that it may be useful outside the ELN.
 
 ## Installation
 
-The package can be installed from pip using the following command:
+First, ensure you have installed the required dependencies:
 ```
-pip install solvent_guide
+pip install numpy==1.26.0 pandas==1.4.1 blinker==1.6.2 flask==2.3.2 plotly==5.9.0 colorama==0.4.6 python-dateutil==2.8.2
 ```
 
-This command should install the following dependencies in addition to the solvent guide:  
-numpy == 1.26.0   
-pandas == 1.4.1  
-blinker >= 1.6.2   
-flask == 2.3.2  
-plotly == 5.9.0  
-colorama == 0.4.6  
-python-dateutil == 2.8.2
+Then, the package can be installed from pip using the following command:
+```
+pip install -i https://test.pypi.org/simple/ solvent-guide
+```
 
 ## Run from command line
 
@@ -30,7 +26,22 @@ Once installed, the Solvent Guide can be launched from the command line with:
 ```
 python -m solvent_guide.webapp
 ```
-This should open a web browser and allow you to view the solvent guide.  
+
+
+This should open a web browser and allow you to view the solvent guide.
+
+_**This process runs on port 5000 by default. If other apps are running on this port then this can cause issues.**_
+
+_**The port can be changed by setting the FLASK_RUN_PORT environment variable in the command line before running. For example, to run on port 80:**_
+
+```
+# Windows
+set FLASK_RUN_PORT=80
+
+# Linux/Mac
+export FLASK_RUN_PORT=80
+```
+
   
 The process can be killed by entering:
 ```
@@ -201,7 +212,7 @@ and following the prompt:
 ```
 Please enter the CAS number for the solvent you wish to remove:
 ```
-All solvents can be removed by resetting the Solvent Guide. This can be done via:
+All added solvents can be removed by resetting the Solvent Guide. This can be done via:
 
 ```
 from solvent_guide.reset_solvents import reset_solvents
