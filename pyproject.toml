@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "solvent_guide"
+version = "0.3.4"
+authors = [
+  {name="Joe Heeley", email="joe.heeley@nottingham.ac.uk"},
+    { name="Samuel Boobier", email="samuel.boobier@googlemail.com" }
+]
+description = "Standalone version of the solvent guide as shown in the AI4Green ELN"
+readme = "README.md"
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GNU Affero General Public License v3",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/JoeHeeley2/solvent_flashcards"
+"Bug Tracker" = "https://github.com/JoeHeeley2/solvent_flashcards/issues"

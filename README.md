@@ -16,7 +16,7 @@ pip install numpy==1.26.0 pandas==1.4.1 blinker==1.6.2 flask==2.3.2 plotly==5.9.
 
 Then, the package can be installed from pip using the following command:
 ```
-pip install -i https://test.pypi.org/simple/ solvent-guide
+pip install solvent_guide
 ```
 
 ## Run from command line
@@ -55,8 +55,10 @@ New solvents can be added to the Solvent Guide by running:
 python -m solvent_guide.add_solvent
 ```
 
-and following the prompts therein. If any information is not available, each prompt can be skipped by pressing enter.  
-  
+and following the prompts therein. If the information is not available, each prompt can be skipped by pressing enter.  
+
+Upon rerunning the Solvent Guide, the new solvent will be included.
+
 A summary of the information required is shown below.
 
 ___
@@ -79,8 +81,6 @@ ___
 **Enter Possible Replacement 1** (*solvent to be used as substitute if applicable*)  
 **Enter Replacement 2** (*str, solvent to be used as substitute is applicable*)
 ___
-
-Upon rerunning the Solvent Guide, the new solvent will be included.
 
 ### Removing solvents
 Solvents can be removed from the Solvent Guide by running: 
@@ -107,7 +107,7 @@ CAUTION! Resetting the database will revert all changes made since installation.
 
 ## Import as python package
 
-It is also possible to run the solvent guide in python by importing the create_app() function.
+It is also possible to run the solvent guide in python by importing the app_run() function.
 
 ```
 from solvent_guide.webapp import app_run
@@ -154,8 +154,8 @@ ___
 **Ranking Default** (*str, CHEM21 default ranking*)  
 **Ranking Discussion** (*str, CHEM21 final ranking*)  
 **Replacement Issues** (*str, justification for replacements*)  
-**Replacement 1** (*str, solvent to be used as substitute if applicable*)  
-**Replacement 2** (*str, solvent to be used as substitute is applicable*)  
+**Replacement 1** (*str, solvent to be used as substitute if applicable. Must be an existing solvent in the database.*)  
+**Replacement 2** (*str, solvent to be used as substitute is applicable. Must be an existing solvent in the database.*)  
 **H3_phrase** (*str, the phrase associated with the worst H3XX number*)  
 **H4_phrase** (*str, the phrase associated with the worst H4XX number*)
 ___
@@ -228,4 +228,8 @@ You will be prompted to confirm this:
 CAUTION! Resetting the database will revert all changes made since installation. Are you sure? (y/n)
 ```
 
+## Troubleshooting
+
+In some cases, running the solvent guide via the command line has resulted in permission errors. These can be overcome by 
+running with admin / sudo privileges.
 

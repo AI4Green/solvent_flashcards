@@ -12,6 +12,28 @@ except FileNotFoundError:
         os.path.join(os.path.dirname(os.path.abspath(__file__)),
                      "sources/blueprints/solvent_guide/", "CHEM21_full.csv"), index_col=0)
 
+chem21 = chem21.fillna("")
+
+def check_CHEM21_she(SHE):
+
+    while True:
+        try:
+            inp = input('Enter CHEM21 ' + SHE + ' Score:')
+
+            if inp == '':
+                print('No ' + SHE + ' score provided, proceeding...')
+                inp = -404
+            else:
+                inp = int(inp)
+
+        except ValueError:
+            print('Please insert CHEM21 ' + SHE + ' score as an integer!')
+
+        else:
+            break
+
+    return inp
+
 
 def add_solvent_from_dataframe(dataframe_to_add):
 
@@ -53,10 +75,11 @@ def add_solvent_from_dataframe(dataframe_to_add):
 
         print('Data successfully added!')
 
+
 def add_solvent():
 
     print('Follow the prompts to add a flashcard for the new solvent. Prompts can be skipped by pressing Enter. For more '
-          'detail about these prompts, please see the documentation: https://test.pypi.org/project/solvent-guide/')
+          'detail about these prompts, please see the documentation: https://pypi.org/project/solvent-guide/')
 
     solvent_data = {}
 
@@ -66,7 +89,7 @@ def add_solvent():
     if solvent_data['CAS'] in chem21['CAS'].values:
         print('CAS Number: %s already in database, aborting...' % solvent_data['CAS'])
         exit()
-    solvent_data['Family'] = input("Enter Solvent Family:")
+    solvent_data['Family'] = input("Enter Solvent Family:").capitalize()
     solvent_data['Solvent'] = input('Enter Solvent Name:')
     solvent_data['Solvent Alternative Name'] = input('Enter Alternative Solvent Name:')
     solvent_data['BP'] = input('Enter Boiling Point:')
@@ -74,7 +97,7 @@ def add_solvent():
     solvent_data['Worst H3xx'] = input('Enter Worst H3xx Statement:')
 
     if solvent_data['Worst H3xx'] == '':
-        solvent_data['H3_phrase'] = 'Unknown'
+        solvent_data['H3_phrase'] = 'None'
 
     else:
         solvent_data['H3_phrase'] = input('Enter Associated H3xx Hazard Phrase:')
@@ -82,38 +105,18 @@ def add_solvent():
     solvent_data['Worst H4xx'] = input('Enter Worst H4xx Statement:')
 
     if solvent_data['Worst H4xx'] == '':
-        solvent_data['H4_phrase'] = 'Unknown'
+        solvent_data['H4_phrase'] = 'None'
 
     else:
         solvent_data['H4_phrase'] = input('Enter Associated H4xx Hazard Phrase:')
 
-    s = 0
-    h = 0
-    e = 0
+    s = check_CHEM21_she('Safety')
+    h = check_CHEM21_she('Health')
+    e = check_CHEM21_she('Env')
 
-    safety = input('Enter CHEM21 Safety Score:')
-    if safety == '':
-        print('No safety score provided, proceeding...')
-        solvent_data['Safety'] = -404
-    else:
-        solvent_data['Safety'] = int(safety)
-        s = int(safety)
-
-    health = input('Enter CHEM21 Health Score:')
-    if health == '':
-        print('No health score provided, proceeding...')
-        solvent_data['Health'] = -404
-    else:
-        solvent_data['Health'] = int(health)
-        h = int(health)
-
-    env = input('Enter CHEM21 Environment Score:')
-    if env == '':
-        print('No health score provided, proceeding...')
-        solvent_data['Env'] = -404
-    else:
-        solvent_data['Env'] = int(env)
-        e = int(env)
+    solvent_data['Safety'] = s
+    solvent_data['Health'] = h
+    solvent_data['Env'] = e
 
     valid_rank = False
     while not valid_rank:
@@ -126,22 +129,36 @@ def add_solvent():
             print('Input not recognised! Please try again')
 
     solvent_data['Replacement Issues'] = input('Enter Replacement Issues:')
-    solvent_data['Replacement 1'] = str(input('Enter Possible Replacement 1:').capitalize())
 
-    if solvent_data['Replacement 1'] in chem21['Solvent']:
-        solvent_data['Replacement 1 Number'] = chem21[chem21['Solvent'].str.contains(solvent_data['Replacement 1'])]['Number'].values[0]
+    replacement_1 = input('Enter Possible Replacement 1 (please ensure this matches an existing solvent in the database):').lower()
+
+    solvent_data['Replacement 1'] = replacement_1.capitalize()
+
+    solvent_names = [x.lower() for x in chem21['Solvent'].values]
+    alternative_solvent_names = [x.lower() for x in chem21['Solvent Alternative Name'].values]
+
+    if replacement_1 in solvent_names:
+        solvent_data['Replacement 1 Number'] = chem21.iloc[solvent_names.index(replacement_1)].Number
+
+    elif replacement_1 in alternative_solvent_names:
+        solvent_data['Replacement 1 Number'] = chem21.iloc[alternative_solvent_names.index(replacement_1)].Number
+
     else:
-        solvent_data['Replacement 1 Number'] = None
+        solvent_data['Replacement 1 Number'] = ""
 
-    solvent_data['Replacement 2'] = input('Enter Possible Replacement 2:').capitalize()
+    replacement_2 = input('Enter Possible Replacement 2 (please ensure this matches an existing solvent in the database):').lower()
+    solvent_data['Replacement 2'] = replacement_2.capitalize()
 
-    if solvent_data['Replacement 2'] in chem21['Solvent']:
-        solvent_data['Replacement 2 Number'] = chem21[chem21['Solvent'].str.contains(solvent_data['Replacement 2'])]['Number'].values[0]
+    if replacement_2 in solvent_names:
+        solvent_data['Replacement 2 Number'] = chem21.iloc[solvent_names.index(replacement_2)].Number
+
+    elif replacement_2 in alternative_solvent_names:
+        solvent_data['Replacement 2 Number'] = chem21.iloc[alternative_solvent_names.index(replacement_2)].Number
+
     else:
-        solvent_data['Replacement 2 Number'] = None
+        solvent_data['Replacement 2 Number'] = ""
 
     solvent_data['graph'] = get_radar_plot(s, h, e)
-
 
     chem21_updated = pd.concat([chem21, pd.DataFrame(solvent_data, index=[0])])
 
