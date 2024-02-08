@@ -5,7 +5,7 @@ from typing import Optional
 import pandas as pd
 import plotly
 import plotly.express as px
-from flask import Response, render_template, jsonify
+from flask import Response, render_template, jsonify, request
 
 
 from . import solvent_guide_bp
@@ -26,9 +26,6 @@ def get_radar_plot(s: str, h: str, e: str) -> str:
 @solvent_guide_bp.route("/", methods=["GET", "POST"])
 @solvent_guide_bp.route("/solvent_guide/<sol>", methods=["GET", "POST"])
 def solvent_guide(sol: Optional[str] = None) -> Response:
-    # user must be logged in
-    #workgroups = get_workgroups()
-   # notification_number = get_notification_number()
     try:
         CHEM21 = pd.read_csv(
             os.path.join(os.path.dirname(os.path.abspath(__file__)), "CHEM21_full_updated.csv"), dtype={'Number': 'Int64'}
@@ -66,14 +63,59 @@ def solvent_guide_help() -> Response:
 
     return render_template(
         "solvent_guide_help.html",
-
         graphJSON=[get_radar_plot(8, 3, 5)],
     )
+
 
 @solvent_guide_bp.route("/get_custom_colours", methods=["GET", "POST"])
 def get_custom_colours() -> Response:
 
-    return jsonify({"colours": {'Recommended': '#00ff00', 'Problematic': '#ffff00', 'Hazardous': '#ff0000',
-                                'HighlyHazardous': '#8B0000', 'Recommended_text': '#000000',
-                                'Problematic_text': '#000000', 'Hazardous_text': '#000000',
-                                'HighlyHazardous_text': '#ffffff'}})
+    try:
+        colours = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "user_colours.txt")))
+
+    except FileNotFoundError:
+        colours = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "default_colours.txt")))
+
+    return jsonify({"colours": colours})
+
+
+@solvent_guide_bp.route("/change_hazard_colours", methods=["GET", "POST"])
+def change_hazard_colours():
+
+    if request.form["mode"] == "update":
+        updated_dict = {
+            "Recommended": request.form["Recommended"],
+            "Problematic": request.form["Problematic"],
+            "Hazardous": request.form["Hazardous"],
+            "HighlyHazardous": request.form["HighlyHazardous"],
+            "Recommended_text": request.form["Recommended_text"],
+            "Problematic_text": request.form["Problematic_text"],
+            "Hazardous_text": request.form["Hazardous_text"],
+            "HighlyHazardous_text": request.form["HighlyHazardous_text"]
+        }
+
+        with open(
+                os.path.join(os.path.dirname(os.path.abspath(__file__)), "user_colours.txt"), 'w'
+        ) as f:
+
+            f.write(json.dumps(updated_dict))
+
+        return jsonify({"message": "Hazard colours were successfully updated!"})
+
+    else:
+        try:
+            os.remove(os.path.join(os.path.dirname(os.path.abspath(__file__)), "user_colours.txt"))
+
+        except FileNotFoundError:
+            return jsonify({"message": "Hazard colours were reverted to the default!"})
+
+        return jsonify({"message": "Hazard colours were reverted to the default!"})
+
+
+@solvent_guide_bp.route("/accessibility", methods=["GET", "POST"])
+def accessibility() -> Response:
+
+    return render_template(
+        "accessibility.html"
+    )
+

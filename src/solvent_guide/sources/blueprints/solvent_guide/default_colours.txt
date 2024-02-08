@@ -1,0 +1,1 @@
+{"Recommended": "#00ff00", "Problematic": "#ffff00", "Hazardous": "#ff0000","HighlyHazardous": "#8B0000", "Recommended_text": "#000000", "Problematic_text": "#000000", "Hazardous_text": "#000000", "HighlyHazardous_text": "#ffffff"}

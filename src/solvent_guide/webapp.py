@@ -1,7 +1,7 @@
 # !/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from .sources import create_app
+from sources import create_app
 from threading import Timer
 import webbrowser
 import os
