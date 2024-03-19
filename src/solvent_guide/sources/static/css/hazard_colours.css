@@ -7,3 +7,18 @@
     background-color: white;
     color: black;
 }
+
+.recommended-button{
+    background-color:#00ff00;
+}
+.problematic-button{
+    background-color:#ffff00;
+}
+.hazardous-button{
+    background-color:#ff0000;
+}
+
+.highlyHazardous-button{
+    background-color:#8B0000;
+    color: white;
+}

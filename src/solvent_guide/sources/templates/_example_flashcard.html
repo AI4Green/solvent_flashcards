@@ -1,0 +1,86 @@
+  <body>
+    <div class="card" style="border-width: 4px; width: 65rem; border-color: blue" id="card">
+          <div class="card-body">
+            <a class="close" data-dismiss="alert" aria-label="close">&times;</a></div>
+          <div><h5 class="card-title">Solvent Name <input type="text" id="Solvent" name="Solvent Name" ></h5></div>
+            <div class="row">
+              <div class="col"><br>
+                <div><h6 class="card-subtitle mb-2 text-muted">CHEM21 Hazard Rating<sup>&#10013;</sup></h6>
+                  <button type="button" class="btn recommended-button" id="recommended-button" onclick ="changeBorderColor(this)">Recommended</button>
+                  <button type="button" class="btn problematic-button" id="problematic-button" onclick ="changeBorderColor(this)">Problematic</button>
+                  <button type="button" class="btn hazardous-button" id="hazardous-button" onclick ="changeBorderColor(this)">Hazardous</button>
+                  <button type="button" class="btn highlyHazardous-button" id="highlyHazardous-button" onclick = "changeBorderColor(this)">Highly hazardous</button><br>
+                    <br>
+                <table class="table table-sm" style="font-size: 12px; border-collapse:collapse; border-spacing: 10px">
+                  <tr>
+                    <th scope="row" style="width: 50%; border-style: hidden!important;">CAS<sup>#</sup>
+                        <th>
+                        <input type="text" id="CAS" name="CAS" placeholder="XXX-XX-X"></th>
+                  </tr>
+                  <tr>
+                    <th scope="row" style="width: 50%; border-style: hidden!important;">Family<sup>*</sup></th>
+                    <th>
+                    <input type="text" id="Family" name="Family">
+                    </th>
+                  </tr>
+                  <tr>
+                    <th scope="row" style="width: 50%; border-style: hidden!important;">Boiling Point / &deg;C<sup>*</sup>
+                    </th>
+                    <th>
+                    <input type="text" id="BP" name="Boiling Point">
+                      </th>
+                  </tr>
+                  <tr>
+                    <th scope="row" style="width: 50%; border-style: hidden!important;">Flash Point / &deg;C<sup>*</sup>
+                    </th>
+                    <th><input type="text" id="FP" name="Flash Point"></th>
+                  </tr>
+                  <tr>
+                    <th scope="row" style="border-style: hidden!important;">Safety<sup>*</sup></th>
+                    <th>
+                      <input type="text" id="Safety" name="Safety" style="border-style: hidden!important; background-color: red" placeholder="e.g. 8"></th>
+                  </tr>
+                  <tr>
+                    <th scope="row" style="border-style: hidden!important;">Health<sup>*</sup></th>
+                    <th>
+                      <input type="text" id="Health" name="Health" style="border-style: hidden!important; background-color: green" placeholder="e.g.3"></th>
+                  </tr>
+                  <tr>
+                    <th scope="row" style="border-style: hidden!important;">Environment<sup>*</sup></th>
+                    <th>
+                      <input type="text" id="Env" name="Environment" style="border-style: hidden!important; background-color: yellow" placeholder="e.g.5"></th>
+                  </tr>
+                  <tr>
+                    <th scope="row" style="border-style: hidden!important;">Worst H3xx<sup>*</sup></th>
+                    <th>
+                      <input type="text" id="Worst-H3xx" name="Worst H3xx" placeholder="e.g. H304">
+                    </th>
+                  </tr>
+                  <tr>
+                    <th scope="row" style="border-style: hidden!important;">Worst H4xx<sup>*</sup></th>
+                    <th>
+                      <input type="text" id="Worst-H4xx" name="Worst H4xx" placeholder="e.g. H411">
+                  <div class="row">
+                    <div id='chart' class='row'>
+                      <div class="row" style="font-size: 12px"></div>
+                    </div>
+                  </div>
+                  <tr>
+                  <th scope="row" style="width: 50%; border-style: hidden!important;"><b>Issues:</b>
+                    <th>
+                    <input type="text" id="Replacement-Issues" name="Issues:" placeholder="Justification for substitution">
+                    </th>
+                </tr>
+                  <tr>
+                    <th scope="row" style="width: 50%; border-style: hidden!important;"><b>Possible Substitutions(s):</b><sup>^</sup>
+                      <th><input type="text" id="Replacement-1" name="Possible Substitution(s)"></th>
+                  <th>
+                    <button class="btn btn btn-primary" type="button" onclick= "saveFlashcard()">Save</button>
+                  </th>
+                </tr>
+                </table>
+                </div>
+              </div>
+            </div>
+    </div>
+  </body>

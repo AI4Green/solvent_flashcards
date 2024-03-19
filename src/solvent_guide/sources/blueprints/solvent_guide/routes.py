@@ -5,13 +5,15 @@ from typing import Optional
 import pandas as pd
 import plotly
 import plotly.express as px
+import pubchempy as pcp
+from pubchemprops.pubchemprops import get_second_layer_props
 from flask import Response, render_template, jsonify, request
 
 
 from . import solvent_guide_bp
 
 
-def get_radar_plot(s: str, h: str, e: str) -> str:
+def get_radar_plot(s: int, h: int, e: int) -> str:
     df = pd.DataFrame(dict(r=[s, h, e], theta=["S", "H", "E"]))
     fig = px.line_polar(df, r="r", theta="theta", line_close=True, range_r=[0, 10])
     fig.update_traces(fill="toself")
@@ -23,17 +25,23 @@ def get_radar_plot(s: str, h: str, e: str) -> str:
     return json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
 
 
-@solvent_guide_bp.route("/", methods=["GET", "POST"])
-@solvent_guide_bp.route("/solvent_guide/<sol>", methods=["GET", "POST"])
-def solvent_guide(sol: Optional[str] = None) -> Response:
+def read_chem21():
     try:
         CHEM21 = pd.read_csv(
-            os.path.join(os.path.dirname(os.path.abspath(__file__)), "CHEM21_full_updated.csv"), dtype={'Number': 'Int64'}
+            os.path.join(os.path.dirname(os.path.abspath(__file__)), "CHEM21_full_updated.csv"),
+            index_col=0
         )
     except FileNotFoundError:
         CHEM21 = pd.read_csv(
-            os.path.join(os.path.dirname(os.path.abspath(__file__)), "CHEM21_full.csv")
+            os.path.join(os.path.dirname(os.path.abspath(__file__)), "CHEM21_full.csv"), index_col=0
         )
+    return CHEM21
+
+@solvent_guide_bp.route("/", methods=["GET", "POST"])
+@solvent_guide_bp.route("/solvent_guide/<sol>", methods=["GET", "POST"])
+def solvent_guide(sol: Optional[str] = None) -> Response:
+
+    CHEM21 = read_chem21()
 
     CHEM21 = CHEM21.sort_values(by="Family")
     CHEM21 = CHEM21.sort_values(by="Solvent")
@@ -118,4 +126,53 @@ def accessibility() -> Response:
     return render_template(
         "accessibility.html"
     )
+
+@solvent_guide_bp.route("/new_solvent", methods = ["GET", "POST"])
+def new_solvent() -> Response:
+
+    return render_template(
+        "new_solvent.html"
+    )
+
+@solvent_guide_bp.route("/add_solvent", methods = ["GET", "POST"])
+def add_solvent() -> Response:
+    data = request.get_json()
+    cas_number = data['cas_number']
+    value_dict = {}
+    get_pubchemid = pcp.get_cids(cas_number)
+    get_props = get_second_layer_props(cas_number, ['Boiling Point', 'Flash Point'])
+    for key, val in get_props.items():
+        for i in val:
+            if 'Value' in i.keys():
+                den_value = i['Value']
+                if 'StringWithMarkup' in den_value.keys():
+                    string_dict = den_value['StringWithMarkup'][0]
+                    if 'String' in string_dict.keys():
+                        if key in ['Boiling Point', 'Flash Point']:
+                            if '°C' in string_dict['String']:
+                                value_dict[key] = string_dict['String']
+    print(value_dict)
+    _example_flashcard = render_template("_example_flashcard.html")
+    return json.dumps({'example_flashcard':_example_flashcard})
+
+
+@solvent_guide_bp.route("/save_flashcard", methods = ["GET", "POST"])
+def save_flashcard() -> Response:
+    data = request.get_json()
+    dict_variable = {key.replace('-', ' '): value for (key, value) in data.items()}
+    dict_variable['graph'] = get_radar_plot(int(dict_variable['Safety']), int(dict_variable['Health']), int(dict_variable['Env']))
+    CHEM21 = read_chem21()
+    dict_variable['Number'] = max(CHEM21['Number']) + 1
+    df = pd.DataFrame(dict_variable, index=[0])
+    updated_chem21 = pd.concat([CHEM21, df])
+    updated_chem21 = updated_chem21.reset_index(drop=True)
+    updated_chem21.to_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)), "CHEM21_full_updated.csv"))
+    return jsonify('success')
+
+
+
+
+
+
+
 

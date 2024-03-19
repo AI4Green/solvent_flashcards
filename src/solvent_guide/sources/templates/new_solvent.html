@@ -1,9 +1,17 @@
 {% extends "base.html" %}
 {% block content %}
+<head>
+<script type="text/javascript" src="{{ url_for('static', filename='js/add_solvent.js') }}"></script>
+</head>
+
 <body>
-<h1>Adding new solvent</h1>
-<label for="Molecular Weight"> Molecular Weight:</label>
-<input type="text" id="Molecular Weight" name ="Molecular Weight"
-       placeholder="">
+<h1>Add a new solvent</h1>
+
+<form>
+  <label for="casNumber" class="custom-label">Enter CAS Number:</label>
+  <input type="text" id="casNumber" name="casNumber">
+  <button onclick= "getSolventInfo(casNumber.value)" type="button" class="btn btn-primary">Enter Cas Number</button>
+</form>
+<div id="example_flashcard"></div>
 </body>
 {% endblock %}
