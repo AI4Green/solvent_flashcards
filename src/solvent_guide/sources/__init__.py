@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-The main file of the app
+The solvent_guide file of the app
 """
 from flask import Flask
 

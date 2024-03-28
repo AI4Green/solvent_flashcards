@@ -8,6 +8,7 @@ import plotly.express as px
 import pubchempy as pcp
 from pubchemprops.pubchemprops import get_second_layer_props
 from flask import Response, render_template, jsonify, request
+from .CHEM21_calculator import CHEM21Calculator
 
 
 from . import solvent_guide_bp
@@ -168,6 +169,26 @@ def save_flashcard() -> Response:
     updated_chem21 = updated_chem21.reset_index(drop=True)
     updated_chem21.to_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)), "CHEM21_full_updated.csv"))
     return jsonify('success')
+
+
+@solvent_guide_bp.route("/CHEM21", methods = ["GET", "POST"])
+def CHEM21() -> Response:
+
+
+    return render_template(
+        "CHEM21.html"
+    )
+
+
+@solvent_guide_bp.route("/CHEM21_calculator", methods = ["GET", "POST"])
+def CHEM21_calculator() -> Response:
+    data = request.get_json()
+    converted_data = {key: (float(value) if value != '' and type(value) != bool else 0) for (key, value) in data.items()}
+    x = CHEM21Calculator(flash_point=converted_data['FP'], boiling_point=converted_data['BP'], ignition_temp=converted_data['IT'], hazard_codes=data['Hazard_codes'],
+                         peroxability=data['peroxability'], resistivity=['resistivity'], reach=['reach'])
+
+    return json.dumps(x.calculate_all())
+
 
 
 

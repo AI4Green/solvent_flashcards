@@ -19,7 +19,7 @@ def remove_solvent():
     if cas_to_remove in chem21['CAS'].values:
         chem21_updated = chem21[~chem21['CAS'].str.match(cas_to_remove)]
         chem21_updated.to_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                     "./sources/blueprints/solvent_guide/", "CHEM21_full_updated.csv"))
+                                           "sources/blueprints/solvent_guide/", "CHEM21_full_updated.csv"))
         print('Solvent with CAS: %s was removed' % cas_to_remove)
 
     else:

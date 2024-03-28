@@ -71,7 +71,7 @@ def add_solvent_from_dataframe(dataframe_to_add):
 
         chem21_updated = pd.concat([chem21, dataframe_to_add], ignore_index=False)
         chem21_updated.to_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                     "sources/blueprints/solvent_guide/", "CHEM21_full_updated.csv"))
+                                           "sources/blueprints/solvent_guide/", "CHEM21_full_updated.csv"))
 
         print('Data successfully added!')
 
@@ -163,7 +163,7 @@ def add_solvent():
     chem21_updated = pd.concat([chem21, pd.DataFrame(solvent_data, index=[0])])
 
     chem21_updated.to_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                     "./sources/blueprints/solvent_guide/", "CHEM21_full_updated.csv"))
+                                       "sources/blueprints/solvent_guide/", "CHEM21_full_updated.csv"))
 
 
 if __name__ == '__main__':

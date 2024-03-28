@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block content %}
+
+<head>
+<script type="text/javascript" src="{{ url_for('static', filename='js/add_solvent.js') }}"></script>
+<style>
+    h1 {
+      color: Dark-grey;
+      font-size: 27px;
+      font-family: Arial, sans-serif;
+      text-align: left-centre;
+    }
+  </style>
+</head>
+<body>
+<h1>CHEM21 Calculator</h1>
+<form>
+    <div class="container pt-3" style="border-width: 4px; width: 65rem; border-color: blue" id="card">
+    <div class="container-body">
+        </div>
+        <div><h5 class="container-title">Solvent Properties</h5></div>
+            <div class="row">
+              <div class="col"><br>
+                  <table class="table table-sm" style="font-size: 17px; border-spacing: 8px; border:none; background-color:white">
+                  <tr>
+                      <th scope="row" style="border:none; background-color:white">Boiling Point / &deg;C<sup>*</sup></th>
+                        <td align="left"><input type="text" id="BP" name="Boiling Point" onchange="UpdateSHEscore()">
+                      </td>
+                    </tr>
+                  <tr>
+                    <th scope="row" style="border-style: hidden!important;">Flash Point / &deg;C<sup>*</sup></th>
+                    <td><input type="text" id="FP" name="Flash Point" onchange="UpdateSHEscore()"></td>
+                  </tr>
+                    <tr>
+                    <th scope="row" style="width: 50%; border-style: hidden!important;">Ignition Temperature / &deg;C<sup>*</sup></th>
+                    <td><input type="text" id="IT" name="Ignition Temperature" onchange="UpdateSHEscore()"></td>
+                  </tr>
+                    <tr>
+                    <th scope="row" style="width: 50%; border-style: hidden!important;">Hazard codes</th>
+                    <td><input type="text" id="Hazard_codes" name="Hazard_codes" onchange="UpdateSHEscore()"></td>
+                  </tr>
+                  <tr>
+                    <th scope="row" style="width: 50%; border-style: hidden!important;">Resistivity</th>
+                    <td class="form-check" align="left"><input class="form-check-input" type="checkbox"  id="resistivity" onchange="UpdateSHEscore()"></td>
+                    </tr>
+                  <tr>
+                    <th scope="row" style="width: 50%; border-style: hidden!important;">Peroxability</th>
+                      <td align="left" class="form-check"><input class="form-check-input" type="checkbox" value="" id="peroxability" onchange="UpdateSHEscore()"></td>
+                  </tr>
+                  <tr>
+                    <th scope="row" style="width: 50%; border-style: hidden!important;">Reach registration</th>
+                    <td align="left" class="form-check"><input class="form-check-input" type="checkbox" value="" id="reach" onchange="UpdateSHEscore()"></td>
+                  </tr>
+                  </table>
+                </div>
+                  <div class="col">
+                      <table class="table table-sm" style="font-size: 17px; border-spacing: 8px; border:none; background-color:white">
+                  <tr>
+                    <th scope="row" style="width: 50%; border-style: hidden!important;">Safety Score</th>
+                      <td>
+                          <input disabled type="text" id="safety_score" style="color: black">
+                      </td>
+                  </tr>
+                  <tr>
+                    <th scope="row" style="width: 50%; border-style: hidden!important;">Health Score</th>
+                      <td><input disabled id="health_score" type="text" style="color: black">
+                      </td></tr>
+                  <tr>
+                    <th scope="row" style="width: 50%; border-style: hidden!important;">Environment Score</th>
+                      <td><input disabled id="env_score" type="text" style="color: black">
+                      </td>
+                  </tr>
+                  <tr>
+                    <th scope="row" style="width: 50%; border-style: hidden!important;">Overall Score</th>
+                      <td><input disabled id="CHEM21_score" type="text" style="color: black">
+                      </td></tr>
+                      </table>
+                  </div>
+            </div>
+    </div>
+</form>
+</body>
+
+{% endblock %}

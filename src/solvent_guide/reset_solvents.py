@@ -8,7 +8,7 @@ def reset_solvents():
     if confirm == 'y':
 
         os.remove(os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                     "./sources/blueprints/solvent_guide/", "CHEM21_full_updated.csv"))
+                               "sources/blueprints/solvent_guide/", "CHEM21_full_updated.csv"))
 
         print('Database has been reset!')
 
