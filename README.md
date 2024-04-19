@@ -16,7 +16,7 @@ pip install numpy==1.26.0 pandas==1.4.1 blinker==1.6.2 flask==2.3.2 plotly==5.9.
 
 Then, the package can be installed from pip using the following command:
 ```
-pip install solvent_guide
+pip install solvent-guide
 ```
 
 ## Run from command line
