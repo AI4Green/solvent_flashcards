@@ -11,7 +11,7 @@ in the hope that it may be useful outside the ELN.
 
 First, ensure you have installed the required dependencies:
 ```
-pip install numpy==1.26.0 pandas==1.4.1 blinker==1.6.2 flask==2.3.2 plotly==5.9.0 colorama==0.4.6 python-dateutil==2.8.2
+pip install numpy>=1.26.0 pandas>=1.4.1 blinker>=1.6.2 flask>=2.3.2 plotly>=5.9.0 colorama>=0.4.6 python-dateutil>=2.8.2
 ```
 
 Then, the package can be installed from pip using the following command:
