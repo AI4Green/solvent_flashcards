@@ -6,7 +6,7 @@
     <p><a class="btn btn-primary" href="{{ url_for('solvent_guide.solvent_guide_help') }}">About the Solvent Guide &#10097;</a>
     <a class="btn btn-secondary" href="{{ url_for('solvent_guide.accessibility') }}">Colour Preferences &#10097;</a></p>
     <p>Choose up to two solvents from the classes below to compare them!</p>
-    <div class="row">
+    <div class="row nav">
       <div class="col-2" style="overflow-y:scroll; max-height:400px; direction:rtl">
         {% for family in families %}
         <a id="family{{ loop.index }}" style="color: black; border: none" class="my-0 py-1 list-group-item" data-toggle="collapse" href="#collapse{{ loop.index }}" role="button" aria-expanded="false" aria-controls="collapseExample">
@@ -213,9 +213,6 @@
     </div>
 </div>
 
-
-
-
 <script>
   $(document).ready(function(){
   $('[data-toggle="tooltip"]').tooltip();
@@ -250,16 +247,21 @@
       return
     }
     if(iteration % 2 === 0){
-      sol = '[href="#list2-' + sol + '"]';
+      if(sub != "sub1" && sub != "sub2") {
+        sol = '[href="#list2-' + sol + '"]';
+      }
       $(sol).tab('show');
     }
-    else{
-      sol = '[href="#list-' + sol + '"]';
+    else {
+      if(sub != "sub1" && sub != "sub2") {
+        sol = '[href="#list-' + sol + '"]';
+      }
       $(sol).tab('show');
     }
   }
 </script>
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/custom_colours.js') }}"></script>
 {% for solvent in solvents %}
 <script>
   var graph = {{ solvent["graph"] | safe}}
@@ -269,11 +271,12 @@
 {% endfor %}
 {% if sol %}
 <script>
+
   $(document).ready(function(){
     showTab({{ sol }}, 'no');
     showTab({{ sol2 }}, 'no');
   });
 </script>
 {% endif %}
-<script type="text/javascript" src="{{ url_for('static', filename='js/custom_colours.js') }}"></script>
+
 {% endblock %}
