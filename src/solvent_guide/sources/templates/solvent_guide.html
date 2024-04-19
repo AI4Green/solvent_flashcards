@@ -10,7 +10,7 @@
     <a class="btn btn-secondary" href="{{ url_for('solvent_guide.accessibility') }}">Colour Preferences &#10097;</a></p>
     <p>Choose up to two solvents from the classes below to compare them!</p>
     <div class="row">
-      <div class="col-2">
+      <div class="col-2" style="overflow-y:scroll; max-height:400px; direction:rtl">
         {% for family in families %}
         <a id="family{{ loop.index }}" style="color: black; border: none" class="my-0 py-1 list-group-item" data-toggle="collapse" href="#collapse{{ loop.index }}" role="button" aria-expanded="false" aria-controls="collapseExample">
           <b>{{ family }}</b>
