@@ -1,8 +1,5 @@
 {% extends "base.html" %}
 {% block content %}
-<head>
-    <script type="text/javascript" src="{{ url_for('static', filename='js/custom_colours.js') }}"></script>
-</head>
 
 <div class="container-fluid">
     <h2>Solvent Guide</h2>
@@ -278,4 +275,5 @@
   });
 </script>
 {% endif %}
+<script type="text/javascript" src="{{ url_for('static', filename='js/custom_colours.js') }}"></script>
 {% endblock %}
